@@ -26,7 +26,8 @@ class TektonInit extends Command
         // https://tekton.dev/
         // https://tekton.dev/docs/getting-started/
         // kubectl apply --filename https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
-        // dashboard available at
+        // kubectl apply --filename https://github.com/tektoncd/dashboard/releases/latest/download/tekton-dashboard-release.yaml
+        // dashboard available at http://localhost:8001/api/v1/namespaces/tekton-pipelines/services/tekton-dashboard:http/proxy/#/pipelines
 
 
         $kubernetes = new Kubernetes();
