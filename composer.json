@@ -1,0 +1,10 @@
+{
+    "require": {
+        "symfony/console": "^5.1",
+        "symfony/process": "^5.1",
+        "maclof/kubernetes-client": "^0.21.0"
+    },
+    "autoload": {
+        "psr-4": {"Flyingmana\\Shasa\\": "src/"}
+    }
+}
