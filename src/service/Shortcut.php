@@ -11,9 +11,9 @@ use Symfony\Component\Process\Process;
 
 class Shortcut
 {
-    public static function runProcess(string $command, OutputInterface $output)
+    public static function runProcess(string $command, OutputInterface $output, $cwd = null)
     {
-        $process = new Process(explode(" ", $command));
+        $process = new Process(explode(" ", $command), $cwd);
 
         try {
             $process->mustRun();
