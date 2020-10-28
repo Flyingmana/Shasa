@@ -59,3 +59,21 @@ spec:
   selector:
     app: shasa-ci
     tier: frontend
+
+---
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: php-ci-cronjob
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: php-ci-cronjob
+              image: flyingmana/shasa-php-ci:latest
+              command: [ "/usr/local/bin/php", "/var/www/html/bin/cron.php" ]
+          restartPolicy: OnFailure

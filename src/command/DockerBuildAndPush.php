@@ -38,7 +38,7 @@ class DockerBuildAndPush extends Command
         );
 
         Shortcut::runProcess(
-            "flyingmana/shasa-php-ci",
+            "docker push flyingmana/shasa-php-ci",
             $output,
             __DIR__.'/../../php-ci'
         );
