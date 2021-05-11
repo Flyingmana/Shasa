@@ -1,3 +1,6 @@
 FROM php:7.4-apache
 
-COPY . /var/www/html/
+
+HEALTHCHECK CMD nc -z localhost 80
+
+COPY --chown=www-data . /var/www/html/
