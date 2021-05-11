@@ -42,6 +42,12 @@ class Overview extends Command
         $output->writeln("Nodes");
         $table->render();
 
+        passthru('kubectl get deployment');
+        passthru('kubectl get svc');
+        passthru('kubectl get ingresses.v1.networking.k8s.io');
+        //passthru('vela ls');
+        //passthru('vela status first-php-ci-app');
+
         return Command::SUCCESS;
 
 

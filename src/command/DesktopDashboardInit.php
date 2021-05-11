@@ -22,6 +22,9 @@ class DesktopDashboardInit extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /**
+         * to have the dashboard running you need to run
+         */
         // https://github.com/kubernetes/dashboard
         // kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.4/aio/deploy/recommended.yaml
         // dashboard available at http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
