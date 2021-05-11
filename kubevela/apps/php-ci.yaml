@@ -1,0 +1,17 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: first-php-ci-app
+spec:
+  components:
+    - name: php-ci-frontend
+      type: webservice
+      properties:
+        image: flyingmana/shasa-php-ci:latest
+        port: 80
+      traits:
+        - type: ingress
+          properties:
+            domain: phpci.local.cotya.de
+            http:
+              "/": 80
