@@ -28,6 +28,46 @@ Get the Kubernetes Dashboard URL by running:
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.46.0/deploy/static/provider/cloud/deploy.yaml
 
 
+### flux
+
+for when you want to automatically update the cluster from Git
+Probably not wise or needed to do for local only experiments
+
+* https://fluxcd.io/docs/get-started/
+
+````
+brew install fluxcd/tap/flux
+````
+
+### concourse-ci
+"Concourse is an open-source continuous thing-doer."
+
+ * https://concourse-ci.org/
+
+Setup: 
+````
+helm repo add concourse https://concourse-charts.storage.googleapis.com/
+helm install my-concourse concourse/concourse
+brew install homebrew/cask/fly
+````
+
+access:
+````
+kubectl get pods --namespace default -l "app=my-concourse-web" -o jsonpath="{.items[0].metadata.name}"
+````
+
+```
+    export POD_NAME=$(kubectl get pods --namespace default -l "app=my-concourse-web" -o jsonpath="{.items[0].metadata.name}")
+    echo "Visit http://127.0.0.1:8080 to use Concourse"
+    kubectl port-forward --namespace default $POD_NAME 8080:8080
+```
+
+needs to download the fly cli from the dashboard
+
+````
+fly -t tutorial login -c http://localhost:8080 -u test -p test
+````
+
 
 ### Tekton Todos
 

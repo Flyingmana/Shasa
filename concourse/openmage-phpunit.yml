@@ -1,0 +1,85 @@
+#resources:
+#  - name: openmage-tests
+#    type: git
+#    icon: github
+#    public: true
+#    source: {uri: "https://github.com/OpenMage/Testfield"}
+#  - name: openmage-src
+#    type: git
+#    icon: github
+#    public: true
+#    source: {uri: "https://github.com/OpenMage/magento-lts"}
+---
+task-config: &task-composer-config
+  platform: linux
+  image_resource:
+    type: registry-image
+    source:
+      repository: composer/composer
+      tag: 2
+
+groups:
+  - name: prepare
+    jobs:
+  - name: test
+    jobs:
+      - unit
+
+
+jobs:
+  - name: unit
+    plan:
+    - task: php-version
+      config:
+        << : *task-composer-config
+        run:
+          path: /bin/sh
+          args:
+            - -c
+            - |
+              ls -la
+              env
+              php --version && composer --version
+        outputs:
+          - name: openmage
+    - task: fetch-lts
+      config:
+        << : *task-composer-config
+        run:
+          path: /bin/sh
+          args:
+            - -c
+            - |
+              git clone https://github.com/OpenMage/magento-lts openmage
+              cd openmage
+              composer install --prefer-dist --no-progress --ignore-platform-reqs --no-interaction
+        outputs:
+          - name: openmage
+    - task: fetch-tests
+      config:
+        << : *task-composer-config
+        run:
+          path: /bin/sh
+          args:
+            - -c
+            - |
+              git clone https://github.com/OpenMage/Testfield tests
+              cd tests
+              composer install --prefer-dist --no-progress --ignore-platform-reqs --no-interaction
+        outputs:
+          - name: tests
+    - task: run
+      config:
+        << : *task-composer-config
+        inputs:
+          - name: openmage
+          - name: tests
+        run:
+          path: /bin/sh
+          args:
+            - -c
+            - |
+              cp -r openmage tests/openmage
+              cd tests
+              bash ./run_unit_tests.sh
+
